@@ -6,7 +6,7 @@ class mycalculator:
 
         self.root = tk.Tk()
         self.label_taxt = tk.StringVar()
-        self.label_taxt.set("Hello DIP01")
+        self.label_taxt.set("")
 
         self.root.geometry("300x300")
         self.root.title(self.title)
@@ -15,17 +15,20 @@ class mycalculator:
         self.label.pack()
 
         self.button_trig = tk.Button(self.root, text="trigger change title to \"Test\"", height=4, )
-        self.button_my_cal = tk.Button(self.root, text="trigger change title to \"My Calculator\"", height=4, )
+        self.button_my_cal = tk.Button(self.root, text="trigger change title to \"My Calculator\"", height=4)
         
 
         self.button=tk.Button(self.root, text='C', height=3, width=7)
         self.button.place(x=20, y=50)
+        self.button.bind( "<Button-1>" , self.actionC)
 
         self.button=tk.Button(self.root, text='7', height=3, width=7)
         self.button.place(x=20, y=110)
+        self.button.bind( "<Button-1>" , self.action7)
 
         self.button=tk.Button(self.root, text='4', height=3, width=7)
         self.button.place(x=20, y=170)
+        self.button.bind( "<Button-1>" , self.action4)
 
         self.button=tk.Button(self.root, text='1', height=3, width=7)
         self.button.place(x=20, y=230)
@@ -85,6 +88,26 @@ class mycalculator:
         self.root.title(self.title)
         self.label_taxt.set("DIP 01")
         self.label.pack()
+
+    def actionC(self, event):
+        print(event)
+        self.title = "Test"
+        self.root.title(self.title)
+        self.label_taxt.set("")
+        self.label.pack()
     
+    def action7(self, event):
+        print(event)
+        self.title = "Test"
+        self.root.title(self.title)
+        self.label_taxt.set(self.label_taxt.get()+"7")
+        self.label.pack()
+
+    def action4(self, event):
+        print(event)
+        self.title = "Test"
+        self.root.title(self.title)
+        self.label_taxt.set(self.label_taxt.get()+"4")
+        self.label.pack()
 
 mycalculator()        
