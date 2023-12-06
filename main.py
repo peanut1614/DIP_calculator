@@ -6,7 +6,7 @@ class mycalculator:
 
         self.root = tk.Tk()
         self.label_taxt = tk.StringVar()
-        self.label_taxt.set("Hello DIP01")
+        self.label_taxt.set("")
 
         self.root.geometry("300x300")
         self.root.title(self.title)
@@ -46,15 +46,18 @@ class mycalculator:
 
         self.button=tk.Button(self.root, text='2', height=3, width=7)
         self.button.place(x=85, y=230)
+        self.button.bind( "<Button-1>" , self.action2)
 
         self.button=tk.Button(self.root, text='%', height=3, width=7)
         self.button.place(x=150, y=50)
 
         self.button=tk.Button(self.root, text='9', height=3, width=7)
         self.button.place(x=150, y=110)
+        self.button.bind( "<Button-1>" , self.action9)
 
         self.button=tk.Button(self.root, text='6', height=3, width=7)
         self.button.place(x=150, y=170)
+        self.button.bind( "<Button-1>" , self.action6)
 
         self.button=tk.Button(self.root, text='3', height=3, width=7)
         self.button.place(x=150, y=230)
@@ -83,8 +86,28 @@ class mycalculator:
         print(event)
         self.title = "Test"
         self.root.title(self.title)
-        self.label_taxt.set("DIP 01")
+        self.label_taxt.set(self.label_taxt.get()+"0")
         self.label.pack()
     
+    def action2(self, event):
+        print(event)
+        self.title = "Test"
+        self.root.title(self.title)
+        self.label_taxt.set(self.label_taxt.get()+"2")
+        self.label.pack()
+
+    def action9(self, event):
+        print(event)
+        self.title = "Test"
+        self.root.title(self.title)
+        self.label_taxt.set(self.label_taxt.get()+"9")
+        self.label.pack() 
+
+    def action6(self, event):
+        print(event)
+        self.title = "Test"
+        self.root.title(self.title)
+        self.label_taxt.set(self.label_taxt.get()+"6")
+        self.label.pack()    
 
 mycalculator()        
