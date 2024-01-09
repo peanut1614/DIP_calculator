@@ -17,3 +17,4 @@
 5. กด terminal เลือก new terminal 
 6. config git ในเครื่อง โดยพิมพ์ git config --global user.name "peanut1614" และ git config --global user.email ratnalinrp@gmail.com ในอีกบรรทัด
 7. ตั้งชื่อไฟล์ใน massage และกด commit
+
