@@ -1,113 +1,44 @@
 import tkinter as tk
 
-class mycalculator:
-    title = "my Calculator"
+LARGE_FONT_STYLE = ("Arial", 40, "bold")
+SMALL_FONT_STYLE = ("Arial", 16)
+DIGITS_FONT_STYLE = ("Arial", 24, "bold")
+DEFAULT_FONT_STYLE = ("Arial", 20)
+
+OFF_WHITE = "#F8FAFF"
+WHITE = "#FFFFFF"
+LIGHT_BLUE = "#CCEDFF"
+LIGHT_GRAY = "#F5F5F5"
+LABEL_COLOR = "#25265E"
+
+
+class Calculator:
     def __init__(self):
+        self.window = tk.Tk()
+        self.window.geometry("375x667")
+        self.window.resizable(0, 0)
+        self.window.title("Calculator")
 
-        self.root = tk.Tk()
-        self.label_taxt = tk.StringVar()
-        self.label_taxt.set("")
+        self.total_expression = ""
+        self.current_expression = ""
+        self.display_frame = self.create_display_frame()
 
-        self.root.geometry("300x300")
-        self.root.title(self.title)
+        self.total_label, self.label = self.create_display_labels()
 
-        self.label = tk.Label(self.root, textvariable=self.label_taxt, font=('Arial', 18))
-        self.label.pack()
+        self.digits = {
+            7: (1, 1), 8: (1, 2), 9: (1, 3),
+            4: (2, 1), 5: (2, 2), 6: (2, 3),
+            1: (3, 1), 2: (3, 2), 3: (3, 3),
+            0: (4, 2), '.': (4, 1)
+        }
+        self.operations = {"/": "\u00F7", "*": "\u00D7", "-": "-", "+": "+"}
+        self.buttons_frame = self.create_buttons_frame()
 
-        self.button_trig = tk.Button(self.root, text="trigger change title to \"Test\"", height=4, )
-        self.button_my_cal = tk.Button(self.root, text="trigger change title to \"My Calculator\"", height=4, )
-        
-
-        self.button=tk.Button(self.root, text='C', height=3, width=7)
-        self.button.place(x=20, y=50)
-
-        self.button=tk.Button(self.root, text='7', height=3, width=7)
-        self.button.place(x=20, y=110)
-
-        self.button=tk.Button(self.root, text='4', height=3, width=7)
-        self.button.place(x=20, y=170)
-
-        self.button=tk.Button(self.root, text='1', height=3, width=7)
-        self.button.place(x=20, y=230)
-
-        self.button=tk.Button(self.root, text='0', height=3, width=16)
-        self.button.place(x=20, y=290)
-
-        self.button.bind( "<Button-1>" , self.action0)
-
-        self.button=tk.Button(self.root, text='+/-', height=3, width=7)
-        self.button.place(x=85, y=50)
-
-        self.button=tk.Button(self.root, text='8', height=3, width=7)
-        self.button.place(x=85, y=110)
-
-        self.button=tk.Button(self.root, text='5', height=3, width=7)
-        self.button.place(x=85, y=170)
-
-        self.button=tk.Button(self.root, text='2', height=3, width=7)
-        self.button.place(x=85, y=230)
-
-        self.button=tk.Button(self.root, text='%', height=3, width=7)
-        self.button.place(x=150, y=50)
-
-        self.button=tk.Button(self.root, text='9', height=3, width=7)
-        self.button.place(x=150, y=110)
-
-        self.button=tk.Button(self.root, text='6', height=3, width=7)
-        self.button.place(x=150, y=170)
-
-        self.button=tk.Button(self.root, text='3', height=3, width=7)
-        self.button.place(x=150, y=230)
-        self.button.bind( "<Button-1>" , self.action3)
-
-        self.button=tk.Button(self.root, text='.', height=3, width=7)
-        self.button.place(x=150, y=290)
-
-        self.button=tk.Button(self.root, text='/', height=3, width=7)
-        self.button.place(x=215, y=50)
-
-        self.button=tk.Button(self.root, text='*', height=3, width=7)
-        self.button.place(x=215, y=110)
-        self.button.bind( "<Button-1>" , self.action10)
-
-        self.button=tk.Button(self.root, text='-', height=3, width=7)
-        self.button.place(x=215, y=170)
-        self.button.bind( "<Button-1>" , self.action11)
-
-        self.button=tk.Button(self.root, text='+', height=3, width=7)
-        self.button.place(x=215, y=230)
-
-        self.button=tk.Button(self.root, text='=', height=3, width=7)
-        self.button.place(x=215, y=290)
-
-        self.root.mainloop()
-
-    def action0(self, event):
-        print(event)
-        self.title = "Test"
-        self.root.title(self.title)
-        self.label_taxt.set("0")
-        self.label.pack()
-    
-    def action3(self, event):
-        print(event)
-        self.title = "Test"
-        self.root.title(self.title)
-        self.label_taxt.set(self.label_taxt.get()+"3")
-        self.label.pack()
-    
-    def action10(self, event):
-        print(event)
-        self.title = "Test"
-        self.root.title(self.title)
-        self.label_taxt.set(self.label_taxt.get()+"*")
-        self.label.pack()
-
-    def action11(self, event):
-        print(event)
-        self.title = "Test"
-        self.root.title(self.title)
-        self.label_taxt.set(self.label_taxt.get()+"-")
-        self.label.pack()
-
-mycalculator()        
+        self.buttons_frame.rowconfigure(0, weight=1)
+        for x in range(1, 5):
+            self.buttons_frame.rowconfigure(x, weight=1)
+            self.buttons_frame.columnconfigure(x, weight=1)
+        self.create_digit_buttons()
+        self.create_operator_buttons()
+        self.create_special_buttons()
+        self.bind_keys()
